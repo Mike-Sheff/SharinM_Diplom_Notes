@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="SizeRounded">70dp</dimen>
+    <dimen name="SizeTextButton">35dp</dimen>
+    <dimen name="valueMarginBottomConstraintLayout">20dp</dimen>
+</resources>

@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Sharin_Diplom_Notes</string>
+    <string name="action_settings">Settings</string>
+    <string name="textButtonNumberOne" translatable="false">1</string>
+    <string name="textButtonNumberTwo" translatable="false">2</string>
+    <string name="textButtonNumberThree" translatable="false">3</string>
+    <string name="textButtonNumberFour" translatable="false">4</string>
+    <string name="textButtonNumberFive" translatable="false">5</string>
+    <string name="textButtonNumberSix" translatable="false">6</string>
+    <string name="textButtonNumberSeven" translatable="false">7</string>
+    <string name="textButtonNumberEight" translatable="false">8</string>
+    <string name="textButtonNumberNine" translatable="false">9</string>
+    <string name="textButtonNumberZero" translatable="false">0</string>
+    <string name="textButtonNumberBackspace" translatable="false">C</string>
+    <string name="textErrorPassword">Пароль неверный!</string>
+    <string name="numberZero" translatable="false">)</string>
+    <string name="numberOne" translatable="false">!</string>
+    <string name="numberTwo" translatable="false">\@</string>
+    <string name="numberThree" translatable="false">#</string>
+    <string name="numberFour" translatable="false">$</string>
+    <string name="numberFive" translatable="false">%</string>
+    <string name="numberSix" translatable="false">^</string>
+    <string name="numberSeven" translatable="false">\?</string>
+    <string name="numberEight" translatable="false">*</string>
+    <string name="numberNine" translatable="false">(</string>
+</resources>

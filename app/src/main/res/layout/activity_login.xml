@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutImagePassword2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarStyle="outsideOverlay"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/valueMarginBottomConstraintLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Добрый день!"
+            android:textSize="@dimen/SizeTextButton"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/valueMarginBottomConstraintLayout"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayoutButtons12345"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/valueMarginBottomConstraintLayout">
+
+            <ImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image1"
+                android:layout_width="@dimen/SizeTextButton"
+                android:layout_height="@dimen/SizeTextButton"
+                android:background="#505050"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/profile_image2"/>
+
+            <ImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image2"
+                android:layout_width="@dimen/SizeTextButton"
+                android:layout_height="@dimen/SizeTextButton"
+                android:background="#505050"
+                app:layout_constraintStart_toEndOf= "@+id/profile_image1"
+                app:layout_constraintEnd_toStartOf="@+id/profile_image3"/>
+
+            <ImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image3"
+                android:layout_width="@dimen/SizeTextButton"
+                android:layout_height="@dimen/SizeTextButton"
+                android:background="#505050"
+                app:layout_constraintStart_toEndOf= "@+id/profile_image2"
+                app:layout_constraintEnd_toStartOf="@+id/profile_image4"/>
+
+            <ImageView
+                android:id="@+id/profile_image4"
+                android:layout_width="@dimen/SizeTextButton"
+                android:layout_height="@dimen/SizeTextButton"
+                android:background="#505050"
+                app:layout_constraintStart_toEndOf="@+id/profile_image3"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayoutButtonsFromOneToThree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/valueMarginBottomConstraintLayout">
+
+            <Button
+                android:id="@+id/buttonNumberOne"
+                android:layout_width="@dimen/SizeRounded"
+                android:layout_height="@dimen/SizeRounded"
+                android:background="@drawable/roundedbutton"
+                android:text="@string/textButtonNumberOne"
+                android:textSize="@dimen/SizeTextButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/buttonNumberTwo"/>
+
+            <Button
+                android:id="@+id/buttonNumberTwo"
+                android:layout_width="@dimen/SizeRounded"
+                android:layout_height="@dimen/SizeRounded"
+                android:background="@drawable/roundedbutton"
+                android:text="@string/textButtonNumberTwo"
+                android:textSize="@dimen/SizeTextButton"
+                app:layout_constraintStart_toEndOf= "@+id/buttonNumberOne"
+                app:layout_constraintEnd_toStartOf="@+id/buttonNumberThree"/>
+
+            <Button
+                android:id="@+id/buttonNumberThree"
+                android:layout_width="@dimen/SizeRounded"
+                android:layout_height="@dimen/SizeRounded"
+                android:background="@drawable/roundedbutton"
+                android:text="@string/textButtonNumberThree"
+                android:textSize="@dimen/SizeTextButton"
+                app:layout_constraintStart_toEndOf="@+id/buttonNumberTwo"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayoutButtonsFromFourToSix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/valueMarginBottomConstraintLayout">
+
+            <Button
+                android:id="@+id/buttonNumberFour"
+                android:layout_width="@dimen/SizeRounded"
+                android:layout_height="@dimen/SizeRounded"
+                android:background="@drawable/roundedbutton"
+                android:text="@string/textButtonNumberFour"
+                android:textSize="@dimen/SizeTextButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/buttonNumberFive"/>
+
+            <Button
+                android:id="@+id/buttonNumberFive"
+                android:layout_width="@dimen/SizeRounded"
+                android:layout_height="@dimen/SizeRounded"
+                android:background="@drawable/roundedbutton"
+                android:text="@string/textButtonNumberFive"
+                android:textSize="@dimen/SizeTextButton"
+                app:layout_constraintStart_toEndOf= "@+id/buttonNumberFour"
+                app:layout_constraintEnd_toStartOf="@+id/buttonNumberSix"/>
+
+            <Button
+                android:id="@+id/buttonNumberSix"
+                android:layout_width="@dimen/SizeRounded"
+                android:layout_height="@dimen/SizeRounded"
+                android:background="@drawable/roundedbutton"
+                android:text="@string/textButtonNumberSix"
+                android:textSize="@dimen/SizeTextButton"
+                app:layout_constraintStart_toEndOf="@+id/buttonNumberFive"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayoutButtonsFromSevenToNine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/valueMarginBottomConstraintLayout">
+
+            <Button
+                android:id="@+id/buttonNumberSeven"
+                android:layout_width="@dimen/SizeRounded"
+                android:layout_height="@dimen/SizeRounded"
+                android:background="@drawable/roundedbutton"
+                android:text="@string/textButtonNumberSeven"
+                android:textSize="@dimen/SizeTextButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/buttonNumberEight"/>
+
+            <Button
+                android:id="@+id/buttonNumberEight"
+                android:layout_width="@dimen/SizeRounded"
+                android:layout_height="@dimen/SizeRounded"
+                android:background="@drawable/roundedbutton"
+                android:text="@string/textButtonNumberEight"
+                android:textSize="@dimen/SizeTextButton"
+                app:layout_constraintStart_toEndOf= "@+id/buttonNumberSeven"
+                app:layout_constraintEnd_toStartOf="@+id/buttonNumberNine"/>
+
+            <Button
+                android:id="@+id/buttonNumberNine"
+                android:layout_width="@dimen/SizeRounded"
+                android:layout_height="@dimen/SizeRounded"
+                android:background="@drawable/roundedbutton"
+                android:text="@string/textButtonNumberNine"
+                android:textSize="@dimen/SizeTextButton"
+                app:layout_constraintStart_toEndOf="@+id/buttonNumberEight"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayoutButtonsFromZeroTo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/valueMarginBottomConstraintLayout">
+
+            <Button
+                android:id="@+id/buttonNumber"
+                android:layout_width="@dimen/SizeRounded"
+                android:layout_height="@dimen/SizeRounded"
+                android:background="@drawable/roundedbutton"
+                android:text=""
+                android:textSize="@dimen/SizeTextButton"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/buttonNumberZero"/>
+
+            <Button
+                android:id="@+id/buttonNumberZero"
+                android:layout_width="@dimen/SizeRounded"
+                android:layout_height="@dimen/SizeRounded"
+                android:background="@drawable/roundedbutton"
+                android:text="@string/textButtonNumberZero"
+                android:textSize="@dimen/SizeTextButton"
+                app:layout_constraintStart_toEndOf= "@+id/buttonNumber"
+                app:layout_constraintEnd_toStartOf="@+id/buttonNumberBackspace"/>
+
+            <Button
+                android:id="@+id/buttonNumberBackspace"
+                android:layout_width="@dimen/SizeRounded"
+                android:layout_height="@dimen/SizeRounded"
+                android:background="@drawable/roundedbutton"
+                android:text="@string/textButtonNumberBackspace"
+                android:textSize="@dimen/SizeTextButton"
+                app:layout_constraintStart_toEndOf="@+id/buttonNumberZero"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+    </LinearLayout>
