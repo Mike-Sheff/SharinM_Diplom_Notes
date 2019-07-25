@@ -5,12 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -29,9 +25,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-
-        Preference_Password = MD5Custom.md5Custom("))))" + MD5Custom.md5Custom("))))"));
-        //TODO:  получить пароль из внутреннего хранилища
 
         NumberButtonClickListener numberListener = new NumberButtonClickListener();
 
@@ -146,13 +139,13 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
 
-            if(enteredUserPassword.length() == 4){
+            if (enteredUserPassword.length() == 4) {
 
                 Log.d(MainActivity.LOG_TAG + LOG_TAG_LOGIN, "--- Проверка пароля ---");
 
-                String hashPassword = MD5Custom.md5Custom(enteredUserPassword + MD5Custom.md5Custom(enteredUserPassword));
+                HashedKeystore hashedKeystore = new HashedKeystore();
 
-                if (hashPassword.equals(Preference_Password)) {
+                if (hashedKeystore.checkPassword(enteredUserPassword)) {
                     finish();
                 } else {
                     Toast.makeText(LoginActivity.this, R.string.textErrorPassword, Toast.LENGTH_SHORT).show();

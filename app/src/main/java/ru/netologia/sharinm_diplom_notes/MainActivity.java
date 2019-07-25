@@ -1,6 +1,7 @@
 package ru.netologia.sharinm_diplom_notes;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -12,18 +13,27 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String LOG_TAG = "myLogs:";
+    public final String SHARED_PREFERENCES_APP_NAME = "mySharePref";
+    public static final String SHARED_PREFERENCES_APP_PASSWORD = "AppPassword";
+
+    public static SharedPreferences mySharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Вывод окна с вводом пароля
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(intent);
+        initViews();
+
+        if ((new HashedKeystore()).hasPassword()){
+            // Вывод окна с вводом пароля
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -37,12 +47,17 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-        initViews();
     }
 
     public void initViews(){
 
+        mySharedPreferences = getSharedPreferences(SHARED_PREFERENCES_APP_NAME, MODE_PRIVATE);
+
+        //if(!mySharedPreferences.contains(SHARED_PREFERENCES_APP_PASSWORD)) {
+       // if((new HashedKeystore()).hasPassword()){
+         //   HashedKeystore hashedKeystore = new HashedKeystore();
+        //    hashedKeystore.saveDefaultPassword();
+        //}
     }
 
     @Override
@@ -59,8 +74,15 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+
+            if (intent != null) {
+                startActivity(intent);
+            }
+
             return true;
         }
 

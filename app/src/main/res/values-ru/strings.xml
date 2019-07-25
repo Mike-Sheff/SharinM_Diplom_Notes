@@ -3,4 +3,8 @@
     <string name="app_name">Диплом Заметки</string>
     <string name="action_settings">Настройки</string>
     <string name="textErrorPassword">Пароль неверный!</string>
+    <string name="textViewNewPassword">Введите новый пароль:</string>
+    <string name="textButtonSavePassword">Сохранить</string>
+    <string name="editTextHintPassword">Введите новый пароль</string>
+    <string name="textMessageSavePassword">Пароль сохранен!</string>
 </resources>
