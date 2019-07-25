@@ -1,10 +1,15 @@
 package ru.netologia.sharinm_diplom_notes;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +26,17 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        initViews();
+    }
+
+    public void initViews() {
+
+        ActionBar actionBar = getSupportActionBar();
+
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         final EditText editNewPassword = findViewById(R.id.editTextPassword);
 
         Button btnSavePassword = findViewById(R.id.buttonSavePassword);
@@ -28,13 +44,16 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(editNewPassword.length() == 4) {
+                if (editNewPassword.length() == 4) {
                     HashedKeystore hashedKeystore = new HashedKeystore();
                     hashedKeystore.saveNewPassword(editNewPassword.getText().toString());
 
+                    editNewPassword.setText("");
                     Toast.makeText(SettingsActivity.this, getString(R.string.textMessageSavePassword), Toast.LENGTH_SHORT).show();
 
                     Log.d(MainActivity.LOG_TAG + LOG_TAG_SETTINGS, "--- Нажата кнопка сохранения пароля ---");
+                } else {
+                    Toast.makeText(SettingsActivity.this, getString(R.string.textErrorLengthPassword), Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -51,7 +70,7 @@ public class SettingsActivity extends AppCompatActivity {
                     editNewPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     Log.d(MainActivity.LOG_TAG + LOG_TAG_SETTINGS, "--- Нажата кнопка для скрытия пароля ---");
                 } else {
-                    btnLookPassword.setBackgroundResource(R.mipmap.ic_eye_look);
+                    btnLookPassword.setBackgroundResource(android.R.drawable.ic_menu_view);
                     editNewPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     Log.d(MainActivity.LOG_TAG + LOG_TAG_SETTINGS, "--- Нажата кнопка для отображение пароля ---");
                 }
@@ -60,5 +79,16 @@ public class SettingsActivity extends AppCompatActivity {
                 lookPassword = !lookPassword;
             }
         });
+    }
+ 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getItemId() == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -7,4 +7,5 @@
     <string name="textButtonSavePassword">Save</string>
     <string name="editTextHintPassword">Enter new password</string>
     <string name="textMessageSavePassword">Password save!</string>
+    <string name="textErrorLengthPassword">The password consists of 4 digits!</string>
 </resources>

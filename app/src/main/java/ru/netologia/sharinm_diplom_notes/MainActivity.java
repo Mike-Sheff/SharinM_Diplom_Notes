@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static SharedPreferences mySharedPreferences;
 
+    private Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +33,10 @@ public class MainActivity extends AppCompatActivity {
 
         if ((new HashedKeystore()).hasPassword()){
             // Вывод окна с вводом пароля
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
+            intent = new Intent(MainActivity.this, LoginActivity.class);
+            if(intent != null){
+                startActivity(intent);
+            }
         }
 
         setContentView(R.layout.activity_main);
@@ -43,8 +47,12 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+            //    intent = new Intent(MainActivity.this, NoteActivity.class);
+
+                if (intent != null) {
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -74,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
@@ -82,10 +89,8 @@ public class MainActivity extends AppCompatActivity {
             if (intent != null) {
                 startActivity(intent);
             }
-
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

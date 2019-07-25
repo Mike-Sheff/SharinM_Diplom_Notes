@@ -13,13 +13,13 @@ public class LoginActivity extends AppCompatActivity {
     private static final String LOG_TAG_LOGIN = "Login";
 
     private String enteredUserPassword = "";
-    private String Preference_Password;
 
     private int[] images;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
         initViews();
     }
