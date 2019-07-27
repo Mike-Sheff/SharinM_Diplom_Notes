@@ -11,38 +11,38 @@ import java.util.List;
 
 public class NoteAdapter extends BaseAdapter {
 
-    private List<Note> items;
+    private List<Note> notes;
 
     private LayoutInflater inflater;
 
-    NoteAdapter(Context context, List<Note> items) {
-        if (items == null) {
-            this.items = new ArrayList<>();
+    NoteAdapter(Context context, List<Note> notes) {
+        if (notes == null) {
+            this.notes = new ArrayList<>();
         } else {
-            this.items = items;
+            this.notes = notes;
         }
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    void addItem(Note item) {
-        this.items.add(item);
+    void addNote(Note note) {
+        this.notes.add(note);
         notifyDataSetChanged();
     }
 
-    void removeItem(int position) {
-        items.remove(position);
+    void removeNote(int position) {
+        notes.remove(position);
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return items.size();
+        return notes.size();
     }
 
     @Override
     public Note getItem(int position) {
-        if (position < items.size()) {
-            return items.get(position);
+        if (position < notes.size()) {
+            return notes.get(position);
         } else {
             return null;
         }
@@ -60,16 +60,28 @@ public class NoteAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.item_list_view, parent, false);
         }
 
-        Note Note = items.get(position);
+        Note Note = notes.get(position);
 
         TextView headline = view.findViewById(R.id.headline);
         TextView textNote = view.findViewById(R.id.textNote);
         TextView dateDeadline = view.findViewById(R.id.dateDeadline);
         TextView dateUpdateNote = view.findViewById(R.id.dateUpdateNote);
 
-        headline.setText(Note.getHeadline());
-        textNote.setText(Note.getTextNote());
-        dateDeadline.setText(Note.getDateDeadline().toString());
+        if(Note.getHeadline().length() == 0) {
+         headline.setVisibility(View.GONE);
+        } else {
+            headline.setText(Note.getHeadline());
+        }
+        if(Note.getTextNote().length() == 0){
+            textNote.setVisibility(View.GONE);
+        } else {
+            textNote.setText(Note.getTextNote());
+        }
+        if(Note.getDateDeadline().length() == 0){
+            dateDeadline.setVisibility(View.GONE);
+        } else {
+            dateDeadline.setText(Note.getDateDeadline().toString());
+        }
         dateUpdateNote.setText(Note.getDateUpdateNote().toString());
 
         return view;

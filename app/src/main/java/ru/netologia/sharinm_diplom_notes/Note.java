@@ -8,10 +8,10 @@ public class Note {
 
     private String headline;
     private String textNote;
-    private Date dateDeadline;
-    private Date dateUpdateNote;
+    private String dateDeadline;
+    private String dateUpdateNote;
 
-    public Note(String headline, String textNote, @Nullable Date  dateDeadline, @Nullable Date dateUpdateNote) {
+    public Note(@Nullable String headline, String textNote, @Nullable String dateDeadline, @Nullable String dateUpdateNote) {
         this.headline = headline;
         this.textNote = textNote;
         this.dateDeadline = dateDeadline;
@@ -34,19 +34,19 @@ public class Note {
         this.textNote = textNote;
     }
 
-    public Date getDateDeadline() {
+    public String getDateDeadline() {
         return dateDeadline;
     }
 
-    public void setDateDeadline(Date dateDeadline) {
+    public void setDateDeadline(String dateDeadline) {
         this.dateDeadline = dateDeadline;
     }
 
-    public Date getDateUpdateNote() {
+    public String getDateUpdateNote() {
         return dateUpdateNote;
     }
 
-    public void setDateUpdateNote(Date dateUpdateNote) {
+    public void setDateUpdateNote(String dateUpdateNote) {
         this.dateUpdateNote = dateUpdateNote;
     }
 }

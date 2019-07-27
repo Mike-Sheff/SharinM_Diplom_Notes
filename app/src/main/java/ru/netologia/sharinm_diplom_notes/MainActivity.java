@@ -16,6 +16,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final String LOG_TAG = "myLogs:";
@@ -27,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private NoteAdapter adapter;
     private static long back_pressed;
     public final String LOG_TAG_MAIN = "Main";
+    private static final String FILE_NAME = "data.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             // Вывод окна с вводом пароля
             intent = new Intent(MainActivity.this, LoginActivity.class);
 
-            Log.d(MainActivity.LOG_TAG + LOG_TAG_MAIN, "--- Запуск активити с пароле, если пароль был установлен ---");
+            Log.d(LOG_TAG + LOG_TAG_MAIN, "--- Запуск активити с пароле, если пароль был установлен ---");
 
             if (intent != null) {
                 startActivity(intent);
@@ -65,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 Log.d(MainActivity.LOG_TAG + LOG_TAG_MAIN, "--- Открытие новой заметки в активити заметки ---");
 
                 openNoteActivity(0);
@@ -74,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.listView);
         adapter = new NoteAdapter(this, null);
         listView.setAdapter(adapter);
+
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -94,12 +104,33 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 Log.d(MainActivity.LOG_TAG + LOG_TAG_MAIN, "--- Обработка удаления заметки ---");
 
-                                adapter.removeItem(position);
+                                adapter.removeNote(position);
                             }
                         }).setNegativeButton(getString(R.string.textDialogNegativeButton), null).show();
                 return true;
             }
         });
+
+
+        JSONNoteRepository jsonNoteRepository = new JSONNoteRepository();
+
+        if (!jsonNoteRepository.fileExists(this, FILE_NAME)){
+            jsonNoteRepository.fileCreateDefault(this, FILE_NAME);
+
+            Log.d(LOG_TAG + LOG_TAG_MAIN, "--- Создание файла с данными по заметкам ---");
+            Toast.makeText(this, "нет файла",Toast.LENGTH_SHORT).show();
+        }
+
+        List<Note> notes = jsonNoteRepository.getNotes(this, FILE_NAME);
+
+        if(notes != null) {
+            for (Note note : notes) {
+                adapter.addNote(note);
+            }
+        }
+
+        Log.d(LOG_TAG + LOG_TAG_MAIN, "--- Отображение файла с данными по заметкам ---");
+        Toast.makeText(this, "есть",Toast.LENGTH_SHORT).show();
     }
 
     public void openNoteActivity(int position) {
