@@ -28,10 +28,16 @@
     <string name="editTextHintPassword">Введите новый пароль</string>
     <string name="textMessageSavePassword">Пароль сохранен!</string>
     <string name="textErrorLengthPassword">Пароль должен состоять из 4 цифр!</string>
-    <string name="textTitltDialogDeleteNote">Удаление заметки</string>
+    <string name="textTitleDialogDeleteNote">Удаление заметки</string>
     <string name="textQuestionDialogDelete">Вы уверены, что хотите удалить эту заметку?</string>
     <string name="textDialogPositiveButton">Да</string>
     <string name="textDialogNegativeButton">Нет</string>
     <string name="textTitleDialogExit">Выход</string>
     <string name="textQuestionDialogExit">Вы уверены, что хотите выйти?</string>
+    <string name="action_note">Заметка</string>
+    <string name="textHintEditTextHeadlineNote">Заголовок</string>
+    <string name="textCheckBoxDeadline">Срок выполнения заметки</string>
+    <string name="textEditTextTextNote">Текст заметки</string>
+    <string name="textEditTextDataDeadline">Дата выполнения</string>
+    <string name="action_save" translatable="false">Save</string>
 </resources>

@@ -8,10 +8,15 @@
     <string name="editTextHintPassword">Enter new password</string>
     <string name="textMessageSavePassword">Password save!</string>
     <string name="textErrorLengthPassword">The password consists of 4 digits!</string>
-    <string name="textTitltDialogDeleteNote">Delete the note</string>
+    <string name="textTitleDialogDeleteNote">Delete the note</string>
     <string name="textQuestionDialogDelete">Are you sure you want to delete the note?</string>
     <string name="textTitleDialogExit">Exit</string>
     <string name="textQuestionDialogExit">Are you sure you want to quit?</string>
     <string name="textDialogPositiveButton">Yes</string>
     <string name="textDialogNegativeButton">No</string>
+    <string name="textHintEditTextHeadlineNote">Headline</string>
+    <string name="textCheckBoxDeadline">Has deadline</string>
+    <string name="textEditTextDataDeadline">Data deadline</string>
+    <string name="textEditTextTextNote">Text note</string>
+    <string name="action_note">Note</string>
 </resources>
