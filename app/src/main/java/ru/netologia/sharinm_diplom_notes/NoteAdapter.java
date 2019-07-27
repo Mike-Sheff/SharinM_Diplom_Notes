@@ -9,13 +9,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemDataAdapter extends BaseAdapter {
+public class NoteAdapter extends BaseAdapter {
 
-    private List<ItemData> items;
+    private List<Note> items;
 
     private LayoutInflater inflater;
 
-    ItemDataAdapter(Context context, List<ItemData> items) {
+    NoteAdapter(Context context, List<Note> items) {
         if (items == null) {
             this.items = new ArrayList<>();
         } else {
@@ -24,7 +24,7 @@ public class ItemDataAdapter extends BaseAdapter {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    void addItem(ItemData item) {
+    void addItem(Note item) {
         this.items.add(item);
         notifyDataSetChanged();
     }
@@ -40,7 +40,7 @@ public class ItemDataAdapter extends BaseAdapter {
     }
 
     @Override
-    public ItemData getItem(int position) {
+    public Note getItem(int position) {
         if (position < items.size()) {
             return items.get(position);
         } else {
@@ -60,17 +60,17 @@ public class ItemDataAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.item_list_view, parent, false);
         }
 
-        ItemData itemData = items.get(position);
+        Note Note = items.get(position);
 
         TextView headline = view.findViewById(R.id.headline);
         TextView textNote = view.findViewById(R.id.textNote);
         TextView dateDeadline = view.findViewById(R.id.dateDeadline);
         TextView dateUpdateNote = view.findViewById(R.id.dateUpdateNote);
 
-        headline.setText(itemData.getHeadline());
-        textNote.setText(itemData.getTextNote());
-        dateDeadline.setText(itemData.getDateDeadline().toString());
-        dateUpdateNote.setText(itemData.getDateUpdateNote().toString());
+        headline.setText(Note.getHeadline());
+        textNote.setText(Note.getTextNote());
+        dateDeadline.setText(Note.getDateDeadline().toString());
+        dateUpdateNote.setText(Note.getDateUpdateNote().toString());
 
         return view;
     }

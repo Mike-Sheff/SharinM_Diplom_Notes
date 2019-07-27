@@ -10,8 +10,6 @@
     <string name="textErrorLengthPassword">The password consists of 4 digits!</string>
     <string name="textTitleDialogDeleteNote">Delete the note</string>
     <string name="textQuestionDialogDelete">Are you sure you want to delete the note?</string>
-    <string name="textTitleDialogExit">Exit</string>
-    <string name="textQuestionDialogExit">Are you sure you want to quit?</string>
     <string name="textDialogPositiveButton">Yes</string>
     <string name="textDialogNegativeButton">No</string>
     <string name="textHintEditTextHeadlineNote">Headline</string>
@@ -19,4 +17,5 @@
     <string name="textEditTextDataDeadline">Data deadline</string>
     <string name="textEditTextTextNote">Text note</string>
     <string name="action_note">Note</string>
+    <string name="textMessageExit">Press once again to exit!</string>
 </resources>

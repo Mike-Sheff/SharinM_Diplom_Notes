@@ -4,14 +4,14 @@ import androidx.annotation.Nullable;
 
 import java.util.Date;
 
-public class ItemData {
+public class Note {
 
     private String headline;
     private String textNote;
     private Date dateDeadline;
     private Date dateUpdateNote;
 
-    public ItemData(String headline, String textNote, @Nullable Date  dateDeadline, @Nullable Date dateUpdateNote) {
+    public Note(String headline, String textNote, @Nullable Date  dateDeadline, @Nullable Date dateUpdateNote) {
         this.headline = headline;
         this.textNote = textNote;
         this.dateDeadline = dateDeadline;

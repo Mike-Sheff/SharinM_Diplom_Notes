@@ -8,11 +8,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +24,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String POSITION_LISTVIEW = "Position";
     public static SharedPreferences mySharedPreferences;
     private Intent intent;
-    private ItemDataAdapter adapter;
+    private NoteAdapter adapter;
+    private static long back_pressed;
+    public final String LOG_TAG_MAIN = "Main";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         if ((new HashedKeystore()).hasPassword()) {
             // Вывод окна с вводом пароля
             intent = new Intent(MainActivity.this, LoginActivity.class);
+
+            Log.d(MainActivity.LOG_TAG + LOG_TAG_MAIN, "--- Запуск активити с пароле, если пароль был установлен ---");
+
             if (intent != null) {
                 startActivity(intent);
             }
@@ -58,18 +65,21 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d(MainActivity.LOG_TAG + LOG_TAG_MAIN, "--- Открытие новой заметки в активити заметки ---");
 
                 openNoteActivity(0);
             }
         });
 
         ListView listView = findViewById(R.id.listView);
-        adapter = new ItemDataAdapter(this, null);
+        adapter = new NoteAdapter(this, null);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(MainActivity.LOG_TAG + LOG_TAG_MAIN, "--- Открытие существующей заметки в активити заметки ---");
+
                 openNoteActivity(position);
             }
         });
@@ -82,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
                         .setPositiveButton(getString(R.string.textDialogPositiveButton), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                Log.d(MainActivity.LOG_TAG + LOG_TAG_MAIN, "--- Обработка удаления заметки ---");
+
                                 adapter.removeItem(position);
                             }
                         }).setNegativeButton(getString(R.string.textDialogNegativeButton), null).show();
@@ -95,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
         intent = new Intent(MainActivity.this, NoteActivity.class);
 
         intent.putExtra(POSITION_LISTVIEW, position);
+
+        Log.d(MainActivity.LOG_TAG + LOG_TAG_MAIN, "--- Обработка перехода на активити заметок ---");
 
         if (intent != null) {
             startActivity(intent);
@@ -119,6 +133,8 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             intent = new Intent(MainActivity.this, SettingsActivity.class);
 
+            Log.d(MainActivity.LOG_TAG + LOG_TAG_MAIN, "--- Обработка кнопки перехода на активити с настройками ---");
+
             if (intent != null) {
                 startActivity(intent);
             }
@@ -129,19 +145,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //TODO: реализовать выход при нажатии дважды на кнопку назад
-        new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle(getString(R.string.textTitleDialogExit))
-                .setMessage(getString(R.string.textQuestionDialogExit))
-                .setPositiveButton(getString(R.string.textDialogPositiveButton), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
 
-                        Intent intent = new Intent(Intent.ACTION_MAIN);
-                        intent.addCategory(Intent.CATEGORY_HOME);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
-                    }
-                }).setNegativeButton(getString(R.string.textDialogNegativeButton), null).show();
+        Log.d(MainActivity.LOG_TAG + LOG_TAG_MAIN, "--- Обработка кнопки назад на телефоне для выхода из приложения ---");
+
+            if (back_pressed + 2000 > System.currentTimeMillis()) {
+                finish();
+                //super.onBackPressed();
+            } else {
+                Toast.makeText(getBaseContext(), getString(R.string.textMessageExit), Toast.LENGTH_SHORT).show();
+            }
+            back_pressed = System.currentTimeMillis();
     }
 }
