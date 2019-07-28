@@ -71,8 +71,7 @@ public class JSONNoteRepository implements NoteRepository{
 
                 for (int i = 0; i < arrayContent.length; i++) {
                     String[] masStr = arrayContent[i].split(";");
-                        noteList.add(new Note((masStr[0] == null ? null: masStr[0]), (masStr[1] == null ? null: masStr[1])
-                                                , (masStr[2] == null ? null: masStr[2]), masStr[3]));
+                        noteList.add(new Note(masStr[0], masStr[1], masStr[2], masStr[3]));
                 }
                 Log.d(LOG_TAG_JSON, str);
             }

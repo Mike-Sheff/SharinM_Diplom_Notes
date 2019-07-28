@@ -22,12 +22,17 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class NoteActivity extends AppCompatActivity {
 
     private EditText dataDeadline;
     public final String LOG_TAG_NOTE = "Note";
+    private Bundle bundle;
+    EditText textNote, headline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +45,13 @@ public class NoteActivity extends AppCompatActivity {
     public void initViews() {
 
         {
-            Bundle bundle = getIntent().getExtras();
+            bundle = getIntent().getExtras();
             if (bundle == null) {
                 return;
             }
 
-            if (bundle.getInt(MainActivity.POSITION_LISTVIEW) == 0) {
-                // TODO:   новая заявка
-            } else {
-                //TODO:  открытие старой
+            if (bundle.getInt(MainActivity.POSITION_LISTVIEW) != 0) {
+                //TODO:  открытие старой заметки
             }
         }
 
@@ -60,6 +63,9 @@ public class NoteActivity extends AppCompatActivity {
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        headline = findViewById(R.id.editTextHeadlineNote);
+        textNote = findViewById(R.id.editTextTextNote);
 
         dataDeadline = findViewById(R.id.editTextDataDeadline);
 
@@ -115,7 +121,28 @@ public class NoteActivity extends AppCompatActivity {
         switch (id) {
             case R.id.action_save:
 
-                //TODO: сохранение заметки
+                if (bundle.getInt(MainActivity.POSITION_LISTVIEW) == 0) {
+                    if (textNote.getText().length() == 0 ){
+                        Toast.makeText(this, "Для сохранения: тело заметки не должно быть пустым!", Toast.LENGTH_LONG).show();
+                    } else {
+                        JSONNoteRepository jsonNoteRepository = new JSONNoteRepository();
+
+                        jsonNoteRepository.saveNote(new Note((headline.getText().length() == 0 ? null: headline.getText().toString())
+                                                              , textNote.getText().toString()
+                                                              ,(dataDeadline.getText().length() == 0 ? null : dataDeadline.getText().toString())
+                                                              , new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date()))
+                                                    , this
+                                                    , MainActivity.FILE_NAME);
+
+                        Toast.makeText(this, "Заметка сохранена!", Toast.LENGTH_LONG).show();
+
+                        finish();
+                    }
+                } else {
+
+                    //TODO: сохранение старой заметки
+                }
+
                 Log.d(MainActivity.LOG_TAG + LOG_TAG_NOTE, "--- Обработка кнопки сохранения заметки ---");
                 return true;
             case android.R.id.home:

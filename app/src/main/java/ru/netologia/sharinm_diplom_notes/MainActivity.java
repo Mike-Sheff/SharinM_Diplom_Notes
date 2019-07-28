@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private NoteAdapter adapter;
     private static long back_pressed;
     public final String LOG_TAG_MAIN = "Main";
-    private static final String FILE_NAME = "data.json";
+    public static final String FILE_NAME = "data.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void initViews() {
 
+        ListView listView = findViewById(R.id.listView);
+        adapter = new NoteAdapter(this, null);
+        listView.setAdapter(adapter);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -72,17 +76,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
                 Log.d(MainActivity.LOG_TAG + LOG_TAG_MAIN, "--- Открытие новой заметки в активити заметки ---");
 
                 openNoteActivity(0);
             }
         });
-
-        ListView listView = findViewById(R.id.listView);
-        adapter = new NoteAdapter(this, null);
-        listView.setAdapter(adapter);
-
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -118,19 +116,26 @@ public class MainActivity extends AppCompatActivity {
             jsonNoteRepository.fileCreateDefault(this, FILE_NAME);
 
             Log.d(LOG_TAG + LOG_TAG_MAIN, "--- Создание файла с данными по заметкам ---");
-            Toast.makeText(this, "нет файла",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Создание тестовых заметок!",Toast.LENGTH_SHORT).show();
         }
 
+        displayNotes();
+
+        Log.d(LOG_TAG + LOG_TAG_MAIN, "--- Отображение файла с данными по заметкам ---");
+    }
+
+    public void displayNotes(){
+
+        JSONNoteRepository jsonNoteRepository = new JSONNoteRepository();
         List<Note> notes = jsonNoteRepository.getNotes(this, FILE_NAME);
 
         if(notes != null) {
+
             for (Note note : notes) {
                 adapter.addNote(note);
             }
         }
 
-        Log.d(LOG_TAG + LOG_TAG_MAIN, "--- Отображение файла с данными по заметкам ---");
-        Toast.makeText(this, "есть",Toast.LENGTH_SHORT).show();
     }
 
     public void openNoteActivity(int position) {
