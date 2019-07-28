@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.d(MainActivity.LOG_TAG + LOG_TAG_MAIN, "--- Открытие новой заметки в активити заметки ---");
 
-                openNoteActivity(0);
+                openNoteActivity(-1);
             }
         });
 

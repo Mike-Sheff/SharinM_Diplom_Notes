@@ -36,6 +36,10 @@ public class JSONNoteRepository implements NoteRepository{
 
     public void fileCreateDefault(Context context, String fileName){
         String dateNow = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
+        saveNote(new Note(null, "Только тело заметки", null, dateNow), context, fileName);
+        saveNote(new Note("Заметка с длинным текстом","Заметки сортируются по дате дедлайна: чем ближе срок истечения, тем выше заметка в списке (просроченные заметки оказываются в самом верху)." +
+                "Если дедлайны совпали или заметка не имеет дедлайна, тогда сортировка происходит по дате последнего изменения (новые или отредактированные оказываются выше)." +
+                "Любая заметка с дедлайном всегда выше заметки без дедлайна.", null, dateNow), context, fileName);
         Date dt = new Date();
         String date = "15.09.2019";
         //TODO: поставить даты нормальные
@@ -43,15 +47,12 @@ public class JSONNoteRepository implements NoteRepository{
         date = "16.09.2019";
         //TODO: поставить даты нормальные
         saveNote(new Note("Заголовок","Тело заметки", date, dateNow), context, fileName);
-        saveNote(new Note(null, "Только тело заметки", null, dateNow), context, fileName);
-        saveNote(new Note("Заметка с длинным текстом","Заметки сортируются по дате дедлайна: чем ближе срок истечения, тем выше заметка в списке (просроченные заметки оказываются в самом верху)." +
-                "Если дедлайны совпали или заметка не имеет дедлайна, тогда сортировка происходит по дате последнего изменения (новые или отредактированные оказываются выше)." +
-                "Любая заметка с дедлайном всегда выше заметки без дедлайна.", null, dateNow), context, fileName);
     }
 
     @Override
-    public Note getNoteById(String id) {
-        return null;
+    public Note getNoteById(String id, Context context, String fileName) {
+        List<Note> notes = getNotes(context, fileName);
+        return notes.get(Integer.parseInt(id));
     }
 
     @Override
@@ -114,7 +115,7 @@ public class JSONNoteRepository implements NoteRepository{
     }
 
     @Override
-    public void deleteById(String id) {
+    public void deleteById(String id, Context context, String filename) {
 
     }
 

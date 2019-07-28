@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -25,6 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class NoteActivity extends AppCompatActivity {
@@ -33,6 +35,8 @@ public class NoteActivity extends AppCompatActivity {
     public final String LOG_TAG_NOTE = "Note";
     private Bundle bundle;
     EditText textNote, headline;
+    TextView dataUpdate;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +48,38 @@ public class NoteActivity extends AppCompatActivity {
 
     public void initViews() {
 
+        headline = findViewById(R.id.editTextHeadlineNote);
+        textNote = findViewById(R.id.editTextTextNote);
+        dataDeadline = findViewById(R.id.editTextDataDeadline);
+
         {
             bundle = getIntent().getExtras();
             if (bundle == null) {
                 return;
             }
 
-            if (bundle.getInt(MainActivity.POSITION_LISTVIEW) != 0) {
-                //TODO:  открытие старой заметки
+            if (bundle.getInt(MainActivity.POSITION_LISTVIEW) != -1) {
+
+                JSONNoteRepository jsonNoteRepository = new JSONNoteRepository();
+
+                Note note = jsonNoteRepository.getNoteById(Integer.toString(bundle.getInt(MainActivity.POSITION_LISTVIEW)), this, MainActivity.FILE_NAME);
+
+                if(note.getHeadline().length() != 0) {
+                    headline.setText(note.getHeadline());
+                }
+                if(note.getTextNote().length() != 0) {
+                    textNote.setText(note.getTextNote());
+                }
+
+                CheckBox checkBox = findViewById(R.id.chechboxDeadline);
+
+                if (note.getDateDeadline().length() != 0 ) {
+                    checkBox.setChecked(true);
+                    dataDeadline.setEnabled(true);
+                    dataDeadline.setText(note.getDateDeadline());
+                } else {
+                    checkBox.setChecked(false);
+                }
             }
         }
 
@@ -63,11 +91,6 @@ public class NoteActivity extends AppCompatActivity {
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-        headline = findViewById(R.id.editTextHeadlineNote);
-        textNote = findViewById(R.id.editTextTextNote);
-
-        dataDeadline = findViewById(R.id.editTextDataDeadline);
 
         final CheckBox checkBoxDeadline = findViewById(R.id.chechboxDeadline);
         checkBoxDeadline.setOnCheckedChangeListener(checkedChangeListener);
@@ -121,7 +144,7 @@ public class NoteActivity extends AppCompatActivity {
         switch (id) {
             case R.id.action_save:
 
-                if (bundle.getInt(MainActivity.POSITION_LISTVIEW) == 0) {
+                if (bundle.getInt(MainActivity.POSITION_LISTVIEW) == -1) {
                     if (textNote.getText().length() == 0 ){
                         Toast.makeText(this, "Для сохранения: тело заметки не должно быть пустым!", Toast.LENGTH_LONG).show();
                     } else {
@@ -139,6 +162,9 @@ public class NoteActivity extends AppCompatActivity {
                         finish();
                     }
                 } else {
+                    JSONNoteRepository jsonNoteRepository = new JSONNoteRepository();
+
+                    List<Note> notes = jsonNoteRepository.getNotes(this, MainActivity.FILE_NAME);
 
                     //TODO: сохранение старой заметки
                 }
