@@ -47,7 +47,7 @@ public class NoteActivity extends AppCompatActivity {
 
     public void initViews() {
 
-        fileNoteRepository = new FileNoteRepository(this, MainActivity.FILE_NAME);
+    //    fileNoteRepository = new FileNoteRepository(this, MainActivity.FILE_NAME);
 
         headline = findViewById(R.id.editTextHeadlineNote);
         textNote = findViewById(R.id.editTextTextNote);
@@ -161,7 +161,7 @@ public class NoteActivity extends AppCompatActivity {
                                                             , textNote.getText().toString()
                                                             ,(dataDeadline.getText().length() == 0 ? null : dataDeadline.getText().toString())
                                                             , new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date())));
-                    
+
                     Toast.makeText(this, "Заметка обнавлена!", Toast.LENGTH_LONG).show();
 
                     //TODO: сохранение старой заметки

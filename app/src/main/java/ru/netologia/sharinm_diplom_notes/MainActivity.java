@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private NoteAdapter adapter;
     private static long back_pressed;
     public final String LOG_TAG_MAIN = "Main";
-    public static final String FILE_NAME = "data.json";
+    //public static final String FILE_NAME = "data.json";
     private NoteRepository fileNoteRepository;
 
     @Override
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         //    hashedKeystore.saveDefaultPassword();
         //}
 
-        if ((new HashedKeystore()).hasPassword()) {
+        if (App.getKeystore().hasPassword()) {
             // Вывод окна с вводом пароля
             intent = new Intent(MainActivity.this, LoginActivity.class);
 
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initViews() {
-        fileNoteRepository = new FileNoteRepository(this, FILE_NAME);
+    //    fileNoteRepository = new FileNoteRepository(this, FILE_NAME);
 
         ListView listView = findViewById(R.id.listView);
         adapter = new NoteAdapter(this, null);

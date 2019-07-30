@@ -1,5 +1,6 @@
 package ru.netologia.sharinm_diplom_notes;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.math.BigInteger;
@@ -8,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class HashedKeystore implements Keystore {
 
-    HashedKeystore(){}
+    HashedKeystore(Context context){}
 
     @Override
     public boolean hasPassword() {

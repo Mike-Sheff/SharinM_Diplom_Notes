@@ -42,8 +42,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (editNewPassword.length() == 4) {
-                    HashedKeystore hashedKeystore = new HashedKeystore();
-                    hashedKeystore.saveNewPassword(editNewPassword.getText().toString());
+                    App.getKeystore().saveNewPassword(editNewPassword.getText().toString());
 
                     editNewPassword.setText("");
                     Toast.makeText(SettingsActivity.this, getString(R.string.textMessageSavePassword), Toast.LENGTH_SHORT).show();

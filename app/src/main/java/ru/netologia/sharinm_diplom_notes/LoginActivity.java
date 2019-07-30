@@ -143,9 +143,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 Log.d(MainActivity.LOG_TAG + LOG_TAG_LOGIN, "--- Проверка пароля ---");
 
-                HashedKeystore hashedKeystore = new HashedKeystore();
 
-                if (hashedKeystore.checkPassword(enteredUserPassword)) {
+                if (App.getKeystore().checkPassword(enteredUserPassword)) {
                     finish();
                 } else {
                     Toast.makeText(LoginActivity.this, R.string.textErrorPassword, Toast.LENGTH_SHORT).show();
