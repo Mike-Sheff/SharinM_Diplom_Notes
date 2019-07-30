@@ -34,7 +34,8 @@ public class NoteActivity extends AppCompatActivity {
     private EditText dataDeadline;
     public final String LOG_TAG_NOTE = "Note";
     private Bundle bundle;
-    EditText textNote, headline;
+    private EditText textNote, headline;
+    private NoteRepository fileNoteRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,8 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     public void initViews() {
+
+        fileNoteRepository = new FileNoteRepository(this, MainActivity.FILE_NAME);
 
         headline = findViewById(R.id.editTextHeadlineNote);
         textNote = findViewById(R.id.editTextTextNote);
@@ -58,9 +61,7 @@ public class NoteActivity extends AppCompatActivity {
 
             if (bundle.getInt(MainActivity.POSITION_LISTVIEW) != -1) {
 
-                JSONNoteRepository jsonNoteRepository = new JSONNoteRepository();
-
-                Note note = jsonNoteRepository.getNoteById(Integer.toString(bundle.getInt(MainActivity.POSITION_LISTVIEW)), this, MainActivity.FILE_NAME);
+                Note note = fileNoteRepository.getNoteById(Integer.toString(bundle.getInt(MainActivity.POSITION_LISTVIEW)));
 
                 if(note.getHeadline().length() != 0) {
                     headline.setText(note.getHeadline());
@@ -146,31 +147,21 @@ public class NoteActivity extends AppCompatActivity {
                     if (textNote.getText().length() == 0 ){
                         Toast.makeText(this, "Для сохранения: тело заметки не должно быть пустым!", Toast.LENGTH_LONG).show();
                     } else {
-                        JSONNoteRepository jsonNoteRepository = new JSONNoteRepository();
-
-                        jsonNoteRepository.saveNote(new Note((headline.getText().length() == 0 ? null: headline.getText().toString())
+                        fileNoteRepository.saveNote(new Note((headline.getText().length() == 0 ? null: headline.getText().toString())
                                                               , textNote.getText().toString()
                                                               ,(dataDeadline.getText().length() == 0 ? null : dataDeadline.getText().toString())
-                                                              , new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date()))
-                                                    , this
-                                                    , MainActivity.FILE_NAME);
+                                                              , new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date())));
 
                         Toast.makeText(this, "Заметка сохранена!", Toast.LENGTH_LONG).show();
 
                     }
                 } else {
-                    JSONNoteRepository jsonNoteRepository = new JSONNoteRepository();
-
-                    jsonNoteRepository.deleteById(String.valueOf(bundle.getInt(MainActivity.POSITION_LISTVIEW)), this, MainActivity.FILE_NAME);
-                    jsonNoteRepository.saveNote(new Note((headline.getText().length() == 0 ? null: headline.getText().toString())
+                    fileNoteRepository.deleteById(String.valueOf(bundle.getInt(MainActivity.POSITION_LISTVIEW)));
+                    fileNoteRepository.saveNote(new Note((headline.getText().length() == 0 ? null: headline.getText().toString())
                                                             , textNote.getText().toString()
                                                             ,(dataDeadline.getText().length() == 0 ? null : dataDeadline.getText().toString())
-                                                            , new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date()))
-                                                , this
-                                                , MainActivity.FILE_NAME);
-
-
-
+                                                            , new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date())));
+                    
                     Toast.makeText(this, "Заметка обнавлена!", Toast.LENGTH_LONG).show();
 
                     //TODO: сохранение старой заметки

@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -17,11 +15,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private static long back_pressed;
     public final String LOG_TAG_MAIN = "Main";
     public static final String FILE_NAME = "data.json";
-    private JSONNoteRepository jsonNoteRepository;
+    private NoteRepository fileNoteRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initViews() {
+        fileNoteRepository = new FileNoteRepository(this, FILE_NAME);
 
         ListView listView = findViewById(R.id.listView);
         adapter = new NoteAdapter(this, null);
@@ -107,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 adapter.removeNote(position);
 
-                                jsonNoteRepository.deleteById(String.valueOf(position),MainActivity.this, MainActivity.FILE_NAME);
+                                fileNoteRepository.deleteById(String.valueOf(position));
 
                                 adapter = new NoteAdapter(MainActivity.this, null);
                             }
@@ -116,11 +111,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        jsonNoteRepository = new JSONNoteRepository();
-
-        if (!jsonNoteRepository.fileExists(this, FILE_NAME)){
-            jsonNoteRepository.fileCreateDefault(this, FILE_NAME);
+        if (!fileNoteRepository.connection()){
+            fileNoteRepository.createDefaultNotes();
 
             Log.d(LOG_TAG + LOG_TAG_MAIN, "--- Создание файла с данными по заметкам ---");
             Toast.makeText(this, "Создание тестовых заметок!",Toast.LENGTH_SHORT).show();
@@ -133,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void displayNotes(){
 
-        List<Note> notes = jsonNoteRepository.getNotes(this, FILE_NAME);
+        List<Note> notes = fileNoteRepository.getNotes();
 
         if(notes != null) {
 

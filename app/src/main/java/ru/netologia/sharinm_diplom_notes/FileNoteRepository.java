@@ -1,10 +1,7 @@
 package ru.netologia.sharinm_diplom_notes;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.util.Log;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,20 +10,26 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
 import static android.content.Context.MODE_APPEND;
 import static android.content.Context.MODE_PRIVATE;
 
-public class JSONNoteRepository implements NoteRepository{
+public class FileNoteRepository implements NoteRepository{
 
-    public final String LOG_TAG_JSON = "JSONNoteRepository";
+    private final String LOG_TAG_JSON = "JSONNoteRepository";
+    private Context context;
+    private String fileName;
 
-    public boolean fileExists(Context context, String fileName) {
+    FileNoteRepository(Context context, String fileName){
+        this.context = context;
+        this.fileName = fileName;
+    }
+
+    @Override
+    public boolean connection() {
         File file = context.getFileStreamPath(fileName);
         if(file == null || !file.exists()) {
             return false;
@@ -34,29 +37,30 @@ public class JSONNoteRepository implements NoteRepository{
         return true;
     }
 
-    public void fileCreateDefault(Context context, String fileName){
+    @Override
+    public void createDefaultNotes(){
         String dateNow = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
-        saveNote(new Note(null, "Только тело заметки", null, dateNow), context, fileName);
+        saveNote(new Note(null, "Только тело заметки", null, dateNow));
         saveNote(new Note("Заметка с длинным текстом","Заметки сортируются по дате дедлайна: чем ближе срок истечения, тем выше заметка в списке (просроченные заметки оказываются в самом верху)." +
                 "Если дедлайны совпали или заметка не имеет дедлайна, тогда сортировка происходит по дате последнего изменения (новые или отредактированные оказываются выше)." +
-                "Любая заметка с дедлайном всегда выше заметки без дедлайна.", null, dateNow), context, fileName);
+                "Любая заметка с дедлайном всегда выше заметки без дедлайна.", null, dateNow));
         Date dt = new Date();
         String date = "15.09.2019";
         //TODO: поставить даты нормальные
-        saveNote(new Note(null, "Заметка без заголовка, но с текстом и дедлайном", date, dateNow), context, fileName);
+        saveNote(new Note(null, "Заметка без заголовка, но с текстом и дедлайном", date, dateNow));
         date = "16.09.2019";
         //TODO: поставить даты нормальные
-        saveNote(new Note("Заголовок","Тело заметки", date, dateNow), context, fileName);
+        saveNote(new Note("Заголовок","Тело заметки", date, dateNow));
     }
 
     @Override
-    public Note getNoteById(String id, Context context, String fileName) {
-        List<Note> notes = getNotes(context, fileName);
+    public Note getNoteById(String id) {
+        List<Note> notes = getNotes();
         return notes.get(Integer.parseInt(id));
     }
 
     @Override
-    public List<Note> getNotes(Context context, String fileName) {
+    public List<Note> getNotes() {
 
         List<Note> noteList = new ArrayList<>();
         BufferedReader br = null;
@@ -93,10 +97,10 @@ public class JSONNoteRepository implements NoteRepository{
     }
 
     @Override
-    public void saveNote(Note note, Context context, String fileName) {
+    public void saveNote(Note note) {
         BufferedWriter bw = null;
         try {
-            if(fileExists(context, fileName)){
+            if(connection()){
             // отрываем поток для записи
             bw = new BufferedWriter(new OutputStreamWriter(
                     context.openFileOutput(fileName, MODE_APPEND)));
@@ -126,8 +130,8 @@ public class JSONNoteRepository implements NoteRepository{
     }
 
     @Override
-    public void deleteById(String id, Context context, String fileName) {
-        List<Note> listNotes = getNotes(context, fileName);
+    public void deleteById(String id) {
+        List<Note> listNotes = getNotes();
         listNotes.remove(Integer.parseInt(id));
 
         BufferedWriter bw = null;
@@ -150,7 +154,7 @@ public class JSONNoteRepository implements NoteRepository{
 
         for (Note note : listNotes ) {
 
-            saveNote(note, context, fileName);
+            saveNote(note);
         }
 
     }
