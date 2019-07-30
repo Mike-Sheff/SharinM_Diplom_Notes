@@ -45,8 +45,8 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:textAlignment="viewEnd"
-            android:text="01/01/2019"
-            android:visibility="gone"/>
+            android:text="01/01/2019"/>
+                <!--android:visibility="gone"-->
 
         </LinearLayout>
 </androidx.cardview.widget.CardView>

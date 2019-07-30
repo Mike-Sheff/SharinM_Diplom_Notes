@@ -35,8 +35,6 @@ public class NoteActivity extends AppCompatActivity {
     public final String LOG_TAG_NOTE = "Note";
     private Bundle bundle;
     EditText textNote, headline;
-    TextView dataUpdate;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,15 +157,26 @@ public class NoteActivity extends AppCompatActivity {
 
                         Toast.makeText(this, "Заметка сохранена!", Toast.LENGTH_LONG).show();
 
-                        finish();
                     }
                 } else {
                     JSONNoteRepository jsonNoteRepository = new JSONNoteRepository();
 
-                    List<Note> notes = jsonNoteRepository.getNotes(this, MainActivity.FILE_NAME);
+                    jsonNoteRepository.deleteById(String.valueOf(bundle.getInt(MainActivity.POSITION_LISTVIEW)), this, MainActivity.FILE_NAME);
+                    jsonNoteRepository.saveNote(new Note((headline.getText().length() == 0 ? null: headline.getText().toString())
+                                                            , textNote.getText().toString()
+                                                            ,(dataDeadline.getText().length() == 0 ? null : dataDeadline.getText().toString())
+                                                            , new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date()))
+                                                , this
+                                                , MainActivity.FILE_NAME);
+
+
+
+                    Toast.makeText(this, "Заметка обнавлена!", Toast.LENGTH_LONG).show();
 
                     //TODO: сохранение старой заметки
                 }
+
+                finish();
 
                 Log.d(MainActivity.LOG_TAG + LOG_TAG_NOTE, "--- Обработка кнопки сохранения заметки ---");
                 return true;

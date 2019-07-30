@@ -59,9 +59,10 @@ public class JSONNoteRepository implements NoteRepository{
     public List<Note> getNotes(Context context, String fileName) {
 
         List<Note> noteList = new ArrayList<>();
+        BufferedReader br = null;
         try {
             // открываем поток для чтения
-            BufferedReader br = new BufferedReader(new InputStreamReader(
+            br = new BufferedReader(new InputStreamReader(
                     context.openFileInput(fileName)));
             String str = "";
 
@@ -80,17 +81,20 @@ public class JSONNoteRepository implements NoteRepository{
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            // закрываем поток
+            try {
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return noteList;
     }
 
-    public boolean connection() {
-        return false;
-    }
-
     @Override
     public void saveNote(Note note, Context context, String fileName) {
-        BufferedWriter bw;
+        BufferedWriter bw = null;
         try {
             if(fileExists(context, fileName)){
             // отрываем поток для записи
@@ -104,18 +108,50 @@ public class JSONNoteRepository implements NoteRepository{
             // пишем данные
             bw.write((note.getHeadline() == null ? "" : note.getHeadline()) + ";" + (note.getTextNote() == null ? "" : note.getTextNote())
                             + ";" + (note.getDateDeadline() == null ? "" : note.getDateDeadline())+ ";" + note.getDateUpdateNote() + "\n");
-            // закрываем поток
-            bw.close();
+
             Log.d(LOG_TAG_JSON, "Файл записан");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            // закрываем поток
+            try {
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     @Override
-    public void deleteById(String id, Context context, String filename) {
+    public void deleteById(String id, Context context, String fileName) {
+        List<Note> listNotes = getNotes(context, fileName);
+        listNotes.remove(Integer.parseInt(id));
+
+        BufferedWriter bw = null;
+
+        try {
+            bw = new BufferedWriter(new OutputStreamWriter(
+                    context.openFileOutput(fileName, MODE_PRIVATE)));
+            bw.write("");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        for (Note note : listNotes ) {
+
+            saveNote(note, context, fileName);
+        }
 
     }
 

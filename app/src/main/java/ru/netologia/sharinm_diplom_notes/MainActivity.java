@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private static long back_pressed;
     public final String LOG_TAG_MAIN = "Main";
     public static final String FILE_NAME = "data.json";
+    private JSONNoteRepository jsonNoteRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, final long id) {
+            public boolean onItemLongClick(final AdapterView<?> parent, final View view, final int position, final long id) {
                 new AlertDialog.Builder(MainActivity.this).setIcon(android.R.drawable.ic_dialog_alert).setTitle(getString(R.string.textTitleDialogDeleteNote))
                         .setMessage(getString(R.string.textQuestionDialogDelete))
                         .setPositiveButton(getString(R.string.textDialogPositiveButton), new DialogInterface.OnClickListener() {
@@ -105,6 +106,10 @@ public class MainActivity extends AppCompatActivity {
                                 Log.d(MainActivity.LOG_TAG + LOG_TAG_MAIN, "--- Обработка удаления заметки ---");
 
                                 adapter.removeNote(position);
+
+                                jsonNoteRepository.deleteById(String.valueOf(position),MainActivity.this, MainActivity.FILE_NAME);
+
+                                adapter = new NoteAdapter(MainActivity.this, null);
                             }
                         }).setNegativeButton(getString(R.string.textDialogNegativeButton), null).show();
                 return true;
@@ -112,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        JSONNoteRepository jsonNoteRepository = new JSONNoteRepository();
+        jsonNoteRepository = new JSONNoteRepository();
 
         if (!jsonNoteRepository.fileExists(this, FILE_NAME)){
             jsonNoteRepository.fileCreateDefault(this, FILE_NAME);
@@ -128,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void displayNotes(){
 
-        JSONNoteRepository jsonNoteRepository = new JSONNoteRepository();
         List<Note> notes = jsonNoteRepository.getNotes(this, FILE_NAME);
 
         if(notes != null) {
@@ -137,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
                 adapter.addNote(note);
             }
         }
-
     }
 
     public void openNoteActivity(int position) {
