@@ -18,7 +18,7 @@ public class App extends Application {
         */
 
         noteRepository = new FileNoteRepository(this, FILE_NAME);
-        hashedKeystore = new HashedKeystore(this);
+        hashedKeystore = new HashedKeystore();
     }
 
     // Возвращаем интерфейс, а не конкретную реализацию!

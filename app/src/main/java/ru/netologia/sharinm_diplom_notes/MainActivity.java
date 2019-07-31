@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private NoteAdapter adapter;
     private static long back_pressed;
     public final String LOG_TAG_MAIN = "Main";
-    //public static final String FILE_NAME = "data.json";
     private NoteRepository fileNoteRepository;
 
     @Override
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initViews() {
-    //    fileNoteRepository = new FileNoteRepository(this, FILE_NAME);
+        fileNoteRepository = App.getNoteRepository();
 
         ListView listView = findViewById(R.id.listView);
         adapter = new NoteAdapter(this, null);
@@ -77,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(MainActivity.LOG_TAG + LOG_TAG_MAIN, "--- Открытие новой заметки в активити заметки ---");
 
                 openNoteActivity(-1);
+
             }
         });
 

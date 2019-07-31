@@ -3,13 +3,9 @@ package ru.netologia.sharinm_diplom_notes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
+import androidx.fragment.app.DialogFragment;
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,19 +13,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
-public class NoteActivity extends AppCompatActivity {
+public class NoteActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private EditText dataDeadline;
     public final String LOG_TAG_NOTE = "Note";
@@ -45,9 +37,19 @@ public class NoteActivity extends AppCompatActivity {
         initViews();
     }
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH , month);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        ++month;
+        dataDeadline.setText((dayOfMonth < 10 ? "0" + dayOfMonth : dayOfMonth) + "." + (month < 10 ? "0" + month : month) + "." + year);
+    }
+
     public void initViews() {
 
-    //    fileNoteRepository = new FileNoteRepository(this, MainActivity.FILE_NAME);
+        fileNoteRepository = App.getNoteRepository();
 
         headline = findViewById(R.id.editTextHeadlineNote);
         textNote = findViewById(R.id.editTextTextNote);
@@ -100,7 +102,9 @@ public class NoteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (checkBoxDeadline.isChecked()) {
 
-                    //TODO: отображение календаря и выбор даты
+                    DialogFragment datePicker = new DatePickerFragment();
+                    datePicker.show(getSupportFragmentManager(), "date picker");
+
                     Toast.makeText(NoteActivity.this, "fdd", Toast.LENGTH_SHORT).show();
                     Log.d(MainActivity.LOG_TAG + LOG_TAG_NOTE, "--- Обработка кнопки с календарем ---");
                 }
@@ -163,8 +167,6 @@ public class NoteActivity extends AppCompatActivity {
                                                             , new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date())));
 
                     Toast.makeText(this, "Заметка обнавлена!", Toast.LENGTH_LONG).show();
-
-                    //TODO: сохранение старой заметки
                 }
 
                 finish();

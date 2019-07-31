@@ -11,9 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String LOG_TAG_LOGIN = "Login";
-
     private String enteredUserPassword = "";
-
     private int[] images;
 
     @Override

@@ -49,7 +49,7 @@ public class DateInputMask implements TextWatcher {
             int mon = Integer.parseInt(clean.substring(2, 4));
             int year = Integer.parseInt(clean.substring(4, 8));
             int getYear = Calendar.getInstance().get(Calendar.YEAR);
-            int getMon = Calendar.getInstance().get(Calendar.MONTH);
+            int getMon = Calendar.getInstance().get(Calendar.MONTH)+ 1;
             int getDay = Calendar.getInstance().get(Calendar.DATE);
 
             year = (year < getYear) ? getYear : year;

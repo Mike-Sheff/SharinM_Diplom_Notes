@@ -9,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class HashedKeystore implements Keystore {
 
-    HashedKeystore(Context context){}
+    HashedKeystore(){}
 
     @Override
     public boolean hasPassword() {

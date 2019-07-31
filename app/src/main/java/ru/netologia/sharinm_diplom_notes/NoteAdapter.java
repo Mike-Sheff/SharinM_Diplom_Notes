@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,19 +73,23 @@ public class NoteAdapter extends BaseAdapter {
         if(Note.getHeadline().length() == 0) {
          headline.setVisibility(View.GONE);
         } else {
+
+            headline.setVisibility(View.VISIBLE);
             headline.setText(Note.getHeadline());
         }
         if(Note.getTextNote().length() == 0){
             textNote.setVisibility(View.GONE);
         } else {
+            textNote.setVisibility(View.VISIBLE);
             textNote.setText(Note.getTextNote());
         }
         if(Note.getDateDeadline().length() == 0){
             dateDeadline.setVisibility(View.GONE);
         } else {
-            dateDeadline.setText(Note.getDateDeadline().toString());
+            dateDeadline.setVisibility(View.VISIBLE);
+            dateDeadline.setText(Note.getDateDeadline());
         }
-        dateUpdateNote.setText(Note.getDateUpdateNote().toString());
+        dateUpdateNote.setText(Note.getDateUpdateNote());
 
         return view;
     }

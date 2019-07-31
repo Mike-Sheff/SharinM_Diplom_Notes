@@ -11,12 +11,13 @@
 
     <ListView
         android:id="@+id/listView"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity"
         tools:showIn="@layout/activity_main"
-        tools:listitem="@layout/item_list_view"/>
+        tools:listitem="@layout/item_list_view"
+        tools:shrinkMode="strict"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"/>
 
 </FrameLayout>
