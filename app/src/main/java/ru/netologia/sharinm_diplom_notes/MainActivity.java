@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private Intent intent;
     private NoteAdapter adapter;
     private static long back_pressed;
-    public final String LOG_TAG_MAIN = "Main";
     private NoteRepository fileNoteRepository;
+    public static final String FILE_NAME = "data.file";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
