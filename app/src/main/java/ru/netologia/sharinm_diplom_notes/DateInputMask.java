@@ -9,11 +9,11 @@ import java.util.Calendar;
 public class DateInputMask implements TextWatcher {
 
     private String current = "";
-    private String ddmmyyyy = "DDMMYYYY";
+    private final String formateDate = "DDMMYYYY";
     private Calendar cal = Calendar.getInstance();
     private EditText input;
 
-    public DateInputMask(EditText input) {
+    DateInputMask(EditText input) {
         this.input = input;
         this.input.addTextChangedListener(this);
     }
@@ -41,7 +41,7 @@ public class DateInputMask implements TextWatcher {
         if (clean.equals(cleanC)) sel--;
 
         if (clean.length() < 8) {
-            clean = clean + ddmmyyyy.substring(clean.length());
+            clean = clean + formateDate.substring(clean.length());
         } else {
             //This part makes sure that when we finish entering numbers
             //the date is correct, fixing it otherwise
@@ -73,9 +73,9 @@ public class DateInputMask implements TextWatcher {
             clean = String.format("%02d%02d%02d", day, mon, year);
         }
 
-        clean = String.format("%s.%s.%s", clean.substring(0, 2),
-                clean.substring(2, 4),
-                clean.substring(4, 8));
+        clean = String.format("%s.%s.%s", clean.substring(0, 2)
+                                        , clean.substring(2, 4)
+                                        , clean.substring(4, 8));
 
         sel = sel < 0 ? 0 : sel;
         current = clean;

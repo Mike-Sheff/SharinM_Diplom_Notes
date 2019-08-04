@@ -8,7 +8,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +18,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String LOG_TAG = "myLogs:";
     public final String SHARED_PREFERENCES_APP_NAME = "mySharePref";
     public static final String SHARED_PREFERENCES_APP_PASSWORD = "AppPassword";
     public static final String POSITION_LISTVIEW = "Position";
@@ -38,17 +36,9 @@ public class MainActivity extends AppCompatActivity {
 
         mySharedPreferences = getSharedPreferences(SHARED_PREFERENCES_APP_NAME, MODE_PRIVATE);
 
-        //if(!mySharedPreferences.contains(SHARED_PREFERENCES_APP_PASSWORD)) {
-        // if((new HashedKeystore()).hasPassword()){
-        //   HashedKeystore hashedKeystore = new HashedKeystore();
-        //    hashedKeystore.saveDefaultPassword();
-        //}
-
         if (App.getKeystore().hasPassword()) {
             // Вывод окна с вводом пароля
             intent = new Intent(MainActivity.this, LoginActivity.class);
-
-            Log.d(LOG_TAG + LOG_TAG_MAIN, "--- Запуск активити с пароле, если пароль был установлен ---");
 
             if (intent != null) {
                 startActivity(intent);
@@ -58,10 +48,20 @@ public class MainActivity extends AppCompatActivity {
         initViews();
     }
 
+    public void displayNotes() {
+
+        List<Note> notes = fileNoteRepository.getNotes();
+
+        if (notes != null) {
+
+            adapter.refresh(notes);
+        }
+    }
+
     public void initViews() {
         fileNoteRepository = App.getNoteRepository();
 
-        ListView listView = findViewById(R.id.listView);
+        final ListView listView = findViewById(R.id.listView);
         adapter = new NoteAdapter(this, null);
         listView.setAdapter(adapter);
 
@@ -72,20 +72,13 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Log.d(MainActivity.LOG_TAG + LOG_TAG_MAIN, "--- Открытие новой заметки в активити заметки ---");
-
                 openNoteActivity(-1);
-
             }
         });
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(MainActivity.LOG_TAG + LOG_TAG_MAIN, "--- Открытие существующей заметки в активити заметки ---");
-
                 openNoteActivity(position);
             }
         });
@@ -98,41 +91,23 @@ public class MainActivity extends AppCompatActivity {
                         .setPositiveButton(getString(R.string.textDialogPositiveButton), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Log.d(MainActivity.LOG_TAG + LOG_TAG_MAIN, "--- Обработка удаления заметки ---");
-
                                 adapter.removeNote(position);
 
                                 fileNoteRepository.deleteById(String.valueOf(position));
 
-                                adapter = new NoteAdapter(MainActivity.this, null);
+                                displayNotes();
                             }
                         }).setNegativeButton(getString(R.string.textDialogNegativeButton), null).show();
                 return true;
             }
         });
 
-        if (!fileNoteRepository.connection()){
+        if (!fileNoteRepository.connection()) {
             fileNoteRepository.createDefaultNotes();
-
-            Log.d(LOG_TAG + LOG_TAG_MAIN, "--- Создание файла с данными по заметкам ---");
-            Toast.makeText(this, "Создание тестовых заметок!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.textMessageCreateDefualtNotes), Toast.LENGTH_SHORT).show();
         }
 
         displayNotes();
-
-        Log.d(LOG_TAG + LOG_TAG_MAIN, "--- Отображение файла с данными по заметкам ---");
-    }
-
-    public void displayNotes(){
-
-        List<Note> notes = fileNoteRepository.getNotes();
-
-        if(notes != null) {
-
-            for (Note note : notes) {
-                adapter.addNote(note);
-            }
-        }
     }
 
     public void openNoteActivity(int position) {
@@ -141,11 +116,15 @@ public class MainActivity extends AppCompatActivity {
 
         intent.putExtra(POSITION_LISTVIEW, position);
 
-        Log.d(MainActivity.LOG_TAG + LOG_TAG_MAIN, "--- Обработка перехода на активити заметок ---");
-
         if (intent != null) {
             startActivity(intent);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        displayNotes();
+        super.onResume();
     }
 
     @Override
@@ -166,8 +145,6 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             intent = new Intent(MainActivity.this, SettingsActivity.class);
 
-            Log.d(MainActivity.LOG_TAG + LOG_TAG_MAIN, "--- Обработка кнопки перехода на активити с настройками ---");
-
             if (intent != null) {
                 startActivity(intent);
             }
@@ -178,15 +155,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
-        Log.d(MainActivity.LOG_TAG + LOG_TAG_MAIN, "--- Обработка кнопки назад на телефоне для выхода из приложения ---");
-
-            if (back_pressed + 2000 > System.currentTimeMillis()) {
-                finish();
-                //super.onBackPressed();
-            } else {
-                Toast.makeText(getBaseContext(), getString(R.string.textMessageExit), Toast.LENGTH_SHORT).show();
-            }
-            back_pressed = System.currentTimeMillis();
+        if (back_pressed + 2000 > System.currentTimeMillis()) {
+            finish();
+        } else {
+            Toast.makeText(getBaseContext(), getString(R.string.textMessageExit), Toast.LENGTH_SHORT).show();
+        }
+        back_pressed = System.currentTimeMillis();
     }
 }

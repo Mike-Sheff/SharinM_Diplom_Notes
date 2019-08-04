@@ -6,7 +6,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,10 +23,10 @@ import java.util.Locale;
 public class NoteActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private EditText dataDeadline;
-    public final String LOG_TAG_NOTE = "Note";
     private Bundle bundle;
     private EditText textNote, headline;
     private NoteRepository fileNoteRepository;
+    private final String TAG_DATE_PICKER = "date picker";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +40,7 @@ public class NoteActivity extends AppCompatActivity implements DatePickerDialog.
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH , month);
+        calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         ++month;
         dataDeadline.setText((dayOfMonth < 10 ? "0" + dayOfMonth : dayOfMonth) + "." + (month < 10 ? "0" + month : month) + "." + year);
@@ -50,10 +49,14 @@ public class NoteActivity extends AppCompatActivity implements DatePickerDialog.
     public void initViews() {
 
         fileNoteRepository = App.getNoteRepository();
+        fileNoteRepository = new FileNoteRepository(this, MainActivity.FILE_NAME);
+
+        fileNoteRepository = App.getNoteRepository();
 
         headline = findViewById(R.id.editTextHeadlineNote);
         textNote = findViewById(R.id.editTextTextNote);
         dataDeadline = findViewById(R.id.editTextDataDeadline);
+        final CheckBox checkBox = findViewById(R.id.chechboxDeadline);
 
         {
             bundle = getIntent().getExtras();
@@ -65,16 +68,14 @@ public class NoteActivity extends AppCompatActivity implements DatePickerDialog.
 
                 Note note = fileNoteRepository.getNoteById(Integer.toString(bundle.getInt(MainActivity.POSITION_LISTVIEW)));
 
-                if(note.getHeadline().length() != 0) {
+                if (note.getHeadline().length() != 0) {
                     headline.setText(note.getHeadline());
                 }
-                if(note.getTextNote().length() != 0) {
+                if (note.getTextNote().length() != 0) {
                     textNote.setText(note.getTextNote());
                 }
 
-                CheckBox checkBox = findViewById(R.id.chechboxDeadline);
-
-                if (note.getDateDeadline().length() != 0 ) {
+                if (note.getDateDeadline().length() != 0) {
                     checkBox.setChecked(true);
                     dataDeadline.setEnabled(true);
                     dataDeadline.setText(note.getDateDeadline());
@@ -89,24 +90,20 @@ public class NoteActivity extends AppCompatActivity implements DatePickerDialog.
 
         ActionBar actionBar = getSupportActionBar();
 
-        if(actionBar != null){
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        final CheckBox checkBoxDeadline = findViewById(R.id.chechboxDeadline);
-        checkBoxDeadline.setOnCheckedChangeListener(checkedChangeListener);
+        checkBox.setOnCheckedChangeListener(checkedChangeListener);
 
         Button btnCalendar = findViewById(R.id.buttonCalendar);
         btnCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkBoxDeadline.isChecked()) {
+                if (checkBox.isChecked()) {
 
                     DialogFragment datePicker = new DatePickerFragment();
-                    datePicker.show(getSupportFragmentManager(), "date picker");
-
-                    Toast.makeText(NoteActivity.this, "fdd", Toast.LENGTH_SHORT).show();
-                    Log.d(MainActivity.LOG_TAG + LOG_TAG_NOTE, "--- Обработка кнопки с календарем ---");
+                    datePicker.show(getSupportFragmentManager(), TAG_DATE_PICKER);
                 }
             }
         });
@@ -120,13 +117,9 @@ public class NoteActivity extends AppCompatActivity implements DatePickerDialog.
             if (b) {
                 dataDeadline.setEnabled(true);
                 dataDeadline.requestFocus();
-                Log.d(MainActivity.LOG_TAG + LOG_TAG_NOTE, "--- Обработка установка галки срока заметки ---");
-
             } else {
                 dataDeadline.setEnabled(false);
                 dataDeadline.setText("");
-
-                Log.d(MainActivity.LOG_TAG + LOG_TAG_NOTE, "--- Обработка снятия галки срока заметки ---");
             }
         }
     };
@@ -137,6 +130,7 @@ public class NoteActivity extends AppCompatActivity implements DatePickerDialog.
         getMenuInflater().inflate(R.menu.menu_note, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -148,35 +142,31 @@ public class NoteActivity extends AppCompatActivity implements DatePickerDialog.
             case R.id.action_save:
 
                 if (bundle.getInt(MainActivity.POSITION_LISTVIEW) == -1) {
-                    if (textNote.getText().length() == 0 ){
-                        Toast.makeText(this, "Для сохранения: тело заметки не должно быть пустым!", Toast.LENGTH_LONG).show();
+                    if (textNote.getText().length() == 0) {
+                        Toast.makeText(this, getString(R.string.textErrorMessageSaveNote), Toast.LENGTH_LONG).show();
                     } else {
-                        fileNoteRepository.saveNote(new Note((headline.getText().length() == 0 ? null: headline.getText().toString())
-                                                              , textNote.getText().toString()
-                                                              ,(dataDeadline.getText().length() == 0 ? null : dataDeadline.getText().toString())
-                                                              , new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date())));
+                        fileNoteRepository.saveNote(new Note((headline.getText().length() == 0 ? null : headline.getText().toString())
+                                , textNote.getText().toString()
+                                , (dataDeadline.getText().length() == 0 ? null : dataDeadline.getText().toString())
+                                , new SimpleDateFormat(getString(R.string.formatDateUpdate), Locale.getDefault()).format(new Date())));
 
-                        Toast.makeText(this, "Заметка сохранена!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, getString(R.string.textMessageSaveNote), Toast.LENGTH_LONG).show();
 
                     }
                 } else {
                     fileNoteRepository.deleteById(String.valueOf(bundle.getInt(MainActivity.POSITION_LISTVIEW)));
-                    fileNoteRepository.saveNote(new Note((headline.getText().length() == 0 ? null: headline.getText().toString())
-                                                            , textNote.getText().toString()
-                                                            ,(dataDeadline.getText().length() == 0 ? null : dataDeadline.getText().toString())
-                                                            , new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date())));
+                    fileNoteRepository.saveNote(new Note((headline.getText().length() == 0 ? null : headline.getText().toString())
+                            , textNote.getText().toString()
+                            , (dataDeadline.getText().length() == 0 ? null : dataDeadline.getText().toString())
+                            , new SimpleDateFormat(getString(R.string.formatDateUpdate), Locale.getDefault()).format(new Date())));
 
-                    Toast.makeText(this, "Заметка обнавлена!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getString(R.string.textMessageUpdateNote), Toast.LENGTH_LONG).show();
                 }
 
                 finish();
-
-                Log.d(MainActivity.LOG_TAG + LOG_TAG_NOTE, "--- Обработка кнопки сохранения заметки ---");
                 return true;
             case android.R.id.home:
                 onBackPressed();
-                Log.d(MainActivity.LOG_TAG + LOG_TAG_NOTE, "--- Обработка кнопки возврващения в main activity ---");
-
                 return true;
         }
         return super.onOptionsItemSelected(item);

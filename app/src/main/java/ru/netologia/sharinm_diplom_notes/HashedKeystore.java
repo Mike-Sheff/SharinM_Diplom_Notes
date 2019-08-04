@@ -1,19 +1,18 @@
 package ru.netologia.sharinm_diplom_notes;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class HashedKeystore implements Keystore {
 
-    HashedKeystore(){}
+    HashedKeystore() {
+    }
 
     @Override
     public boolean hasPassword() {
-        if(MainActivity.mySharedPreferences.contains(MainActivity.SHARED_PREFERENCES_APP_PASSWORD)){
+        if (MainActivity.mySharedPreferences.contains(MainActivity.SHARED_PREFERENCES_APP_PASSWORD)) {
             return true;
         } else {
             return false;
@@ -25,14 +24,10 @@ public class HashedKeystore implements Keystore {
 
         String hashPassword = md5Custom(password + md5Custom(password));
         String sharePrefPassword = MainActivity.mySharedPreferences.getString(MainActivity.SHARED_PREFERENCES_APP_PASSWORD, "");
-        if(sharePrefPassword.equals(hashPassword))
+        if (sharePrefPassword.equals(hashPassword))
             return true;
         else
             return false;
-    }
-
-    public void saveDefaultPassword() {
-        saveNewPassword("0000");
     }
 
     @Override

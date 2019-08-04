@@ -2,15 +2,12 @@ package ru.netologia.sharinm_diplom_notes;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
-
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String LOG_TAG_LOGIN = "Login";
     private String enteredUserPassword = "";
     private int[] images;
 
@@ -72,15 +69,13 @@ public class LoginActivity extends AppCompatActivity {
             */
 
             // вариант 2
-            if (enteredUserPassword.length() < 4) {
+            if (enteredUserPassword.length() < R.dimen.lengthPassword) {
                 idButtonClicked = v.getId();
             } else if (v.getId() == R.id.buttonNumberBackspace) {
                 idButtonClicked = v.getId();
             } else {
                 idButtonClicked = 0; // когда пароль превышает 4 символов
             }
-
-            Log.d(MainActivity.LOG_TAG + LOG_TAG_LOGIN, "--- Обработка кнопки " + idButtonClicked + " ---");
 
             switch (idButtonClicked) {
                 case R.id.buttonNumberZero:
@@ -126,22 +121,14 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             for (int i = 0; i < images.length; i++) {
-
-                Log.d(MainActivity.LOG_TAG + LOG_TAG_LOGIN, "--- Закрашивание image при введенных символах ---");
-
                 if (i < enteredUserPassword.length()) {
-                    //TODO:  подправить цвета
                     findViewById(images[i]).setBackgroundColor(Color.rgb(255, 193, 7));
                 } else {
                     findViewById(images[i]).setBackgroundColor(Color.rgb(80, 80, 80));
                 }
             }
 
-            if (enteredUserPassword.length() == 4) {
-
-                Log.d(MainActivity.LOG_TAG + LOG_TAG_LOGIN, "--- Проверка пароля ---");
-
-
+            if (enteredUserPassword.length() == R.dimen.lengthPassword) {
                 if (App.getKeystore().checkPassword(enteredUserPassword)) {
                     finish();
                 } else {

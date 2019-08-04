@@ -4,7 +4,7 @@ import android.app.Application;
 
 public class App extends Application {
 
-    private static NoteRepository noteRepository;
+    public static NoteRepository noteRepository;
     private static Keystore hashedKeystore;
     public static final String FILE_NAME = "data.json";
 

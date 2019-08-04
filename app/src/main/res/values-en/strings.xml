@@ -18,4 +18,8 @@
     <string name="textEditTextTextNote">Text note</string>
     <string name="action_note">Note</string>
     <string name="textMessageExit">Press once again to exit!</string>
+    <string name="textMessageUpdateNote" translatable="false">Note  update!</string>
+    <string name="textMessageSaveNote" translatable="false">Note Save!</string>
+    <string name="textMessageCreateDefualtNotes" translatable="false">Create default notes!</string>
+    <string name="textErrorMessageSaveNote" translatable="false">To save: the body of the note should not be empty!</string>
 </resources>

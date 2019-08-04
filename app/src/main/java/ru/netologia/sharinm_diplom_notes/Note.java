@@ -2,8 +2,6 @@ package ru.netologia.sharinm_diplom_notes;
 
 import androidx.annotation.Nullable;
 
-import java.util.Date;
-
 public class Note {
 
     private String headline;
@@ -11,14 +9,14 @@ public class Note {
     private String dateDeadline;
     private String dateUpdateNote;
 
-    public Note(@Nullable String headline, String textNote, @Nullable String dateDeadline, @Nullable String dateUpdateNote) {
+    Note(@Nullable String headline, String textNote, @Nullable String dateDeadline, @Nullable String dateUpdateNote) {
         this.headline = headline;
         this.textNote = textNote;
         this.dateDeadline = dateDeadline;
         this.dateUpdateNote = dateUpdateNote;
     }
 
-    public String getHeadline() {
+    String getHeadline() {
         return headline;
     }
 
@@ -26,7 +24,7 @@ public class Note {
         this.headline = headline;
     }
 
-    public String getTextNote() {
+    String getTextNote() {
         return textNote;
     }
 
@@ -34,7 +32,7 @@ public class Note {
         this.textNote = textNote;
     }
 
-    public String getDateDeadline() {
+    String getDateDeadline() {
         return dateDeadline;
     }
 
@@ -42,7 +40,7 @@ public class Note {
         this.dateDeadline = dateDeadline;
     }
 
-    public String getDateUpdateNote() {
+    String getDateUpdateNote() {
         return dateUpdateNote;
     }
 

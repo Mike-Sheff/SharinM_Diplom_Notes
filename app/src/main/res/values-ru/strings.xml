@@ -18,4 +18,8 @@
     <string name="textEditTextDataDeadline">Дата выполнения</string>
     <string name="textEditTextTextNote">Текст заметки</string>
     <string name="textMessageExit">Нажмите еще раз, чтобы выйти!</string>
+    <string name="textMessageUpdateNote">Заметка обнавлена!</string>
+    <string name="textMessageSaveNote" translatable="false">Заметка сохранена!</string>
+    <string name="textMessageCreateDefualtNotes">Создание тестовых заметок!</string>
+    <string name="textErrorMessageSaveNote" translatable="false">Для сохранения: тело заметки не должно быть пустым!</string>
 </resources>
