@@ -1,6 +1,9 @@
 package ru.netologia.sharinm_diplom_notes;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
+import java.util.Date;
 
 class ComparatorNotes implements Comparator {
     @Override
@@ -8,13 +11,50 @@ class ComparatorNotes implements Comparator {
         Note note1 = (Note) o1;
         Note note2 = (Note) o2;
 
-        int xz1 = note1.getDateDeadline().length() != 0 ? 1 : 0;
-        int xz2 = note2.getDateDeadline().length() != 0 ? 1 : 0;
+        Date datedeadline1 = null, datedeadline2 = null, dateUpdate1 = null, dateUpdate2 = null;
 
-        if (xz1 > xz2) {
-           return -1;
-        } else if (xz2 > xz1) {
+        int existenceDateDeadline1 = note1.getDateDeadline().length() != 0 ? 1 : 0;
+        int existenceDateDeadline2 = note2.getDateDeadline().length() != 0 ? 1 : 0;
+
+        if (existenceDateDeadline1 == 1) {
+            try {
+                datedeadline1 = new SimpleDateFormat("dd.MM.yyyy").parse(note1.getDateDeadline());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        if (existenceDateDeadline2 == 1) {
+            try {
+                datedeadline2 = new SimpleDateFormat("dd.MM.yyyy").parse(note2.getDateDeadline());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            dateUpdate1 = new SimpleDateFormat("dd.MM.yyyy").parse(note1.getDateUpdateNote());
+            dateUpdate2 = new SimpleDateFormat("dd.MM.yyyy").parse(note2.getDateUpdateNote());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (existenceDateDeadline1 > existenceDateDeadline2) {
+            return -1;
+        } else if (existenceDateDeadline2 > existenceDateDeadline1) {
             return 1;
+        } else if ((existenceDateDeadline1 == existenceDateDeadline2) && (existenceDateDeadline1 == 1)) {
+            if (datedeadline1.equals(datedeadline2)) {
+                if (dateUpdate1.after(dateUpdate2)) {
+                    return -1;
+                }
+            }
+            if (datedeadline1.before(datedeadline2)) {
+                return -1;
+            }
+        } else if ((existenceDateDeadline1 == existenceDateDeadline2) && (existenceDateDeadline1 == 0)) {
+            if (dateUpdate1.after(dateUpdate2)) {
+                return -1;
+            }
         }
 
         return 0;
