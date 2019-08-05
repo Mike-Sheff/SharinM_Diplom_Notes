@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
 
-            if (enteredUserPassword.length() == R.dimen.lengthPassword) {
+            if (enteredUserPassword.length() == 4) {
                 if (App.getKeystore().checkPassword(enteredUserPassword)) {
                     finish();
                 } else {

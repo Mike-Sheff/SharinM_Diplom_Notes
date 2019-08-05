@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="headline_1" translatable="false">Заголовок</string>
+    <string name="headline_4" translatable="false">Заметка с длинным текстом</string>]
+    <string name="headline_7" translatable="false">Заметка с длинным заголовком и небольшим текстом</string>
+    <string name="headline_8" translatable="false">Заметка с истекшим сроком</string>
+    <string name="headline_10" translatable="false">Заметка с истекшим сроком 2</string>
+    <string name="textNote_1" translatable="false">4 Тело заметки</string>
+    <string name="textNote_2" translatable="false">10 Только тело заметки 1</string>
+    <string name="textNote_3" translatable="false">8-9 Только тело заметки 2</string>
+    <string name="textNote_4" translatable="false">8-9 Заметки сортируются по дате дедлайна: чем ближе срок истечения, тем выше заметка в списке (просроченные заметки оказываются в самом верху). Если дедлайны совпали или заметка не имеет дедлайна, тогда сортировка происходит по дате последнего изменения (новые или отредактированные оказываются выше). Любая заметка с дедлайном всегда выше заметки без дедлайна.</string>
+    <string name="textNote_5" translatable="false">6 Заметка без заголовка, но с текстом и дедлайном 2</string>
+    <string name="textNote_6" translatable="false">5 Заметка без заголовка, но с текстом и дедлайном 1</string>
+    <string name="textNote_7" translatable="false">3 Заметка с длинным заголовка</string>
+    <string name="textNote_8" translatable="false">2 Заметка с заголовком и истекшим сроком</string>
+    <string name="textNote_9" translatable="false">7 Только тело заметки 3</string>
+    <string name="textNote_10" translatable="false">1 Заметка с заголовком и истекшим сроком</string>
+    <string name="dateDeadline_1" translatable="false">15.09.2019</string>
+    <string name="dateDeadline_5" translatable="false">16.09.2019</string>
+    <string name="dateDeadline_6" translatable="false">16.09.2019</string>
+    <string name="dateDeadline_7" translatable="false">01.04.2019</string>
+    <string name="dateDeadline_8" translatable="false">04.05.2018</string>
+    <string name="dateDeadline_10" translatable="false">04.05.2018</string>
+    <string name="dateUpdate_2" translatable="false">01.07.2018</string>
+    <string name="dateUpdate_3" translatable="false">17.07.2019</string>
+    <string name="dateUpdate_4" translatable="false">01.07.2019</string>
+    <string name="dateUpdate_5" translatable="false">16.06.2019</string>
+    <string name="dateUpdate_8" translatable="false">03.05.2018</string>
+    <string name="dateUpdate_10" translatable="false">04.05.2018</string>
+    <string name="formatDate" translatable="false">dd.MM.yyyy</string>
+</resources>

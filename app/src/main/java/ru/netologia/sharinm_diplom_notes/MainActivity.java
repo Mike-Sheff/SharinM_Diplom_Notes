@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (!fileNoteRepository.connection()) {
             fileNoteRepository.createDefaultNotes();
-            Toast.makeText(this, getString(R.string.textMessageCreateDefualtNotes), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.textMessageCreateDefaultNotes), Toast.LENGTH_SHORT).show();
         }
 
         displayNotes();

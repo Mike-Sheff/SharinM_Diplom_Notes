@@ -38,20 +38,19 @@ public class FileNoteRepository implements NoteRepository {
 
     @Override
     public void createDefaultNotes() {
-        // Есть ли смысл это все закидывать в string. Если это все тестовое? или создать отдельный файл?
-        String dateNow = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
-        saveNote(new Note("Заголовок", "4 Тело заметки", "15.09.2019", dateNow));
-        saveNote(new Note(null, "10 Только тело заметки 1", null, "01.07.2018"));
-        saveNote(new Note(null, "8-9 Только тело заметки 2", null, "17.07.2019"));
-        saveNote(new Note("Заметка с длинным текстом", "8-9 Заметки сортируются по дате дедлайна: чем ближе срок истечения, тем выше заметка в списке (просроченные заметки оказываются в самом верху)." +
-                "Если дедлайны совпали или заметка не имеет дедлайна, тогда сортировка происходит по дате последнего изменения (новые или отредактированные оказываются выше)." +
-                "Любая заметка с дедлайном всегда выше заметки без дедлайна.", null, "01.07.2019"));
-        saveNote(new Note(null, "6 Заметка без заголовка, но с текстом и дедлайном 2", "16.09.2019", "16.06.2019"));
-        saveNote(new Note(null, "5 Заметка без заголовка, но с текстом и дедлайном 1", "16.09.2019", dateNow));
-        saveNote(new Note("Заметка с длинным заголовком и небольшим текстом", "3 Заметка с длинным заголовка", "01.04.2019", dateNow));
-        saveNote(new Note("Заметка с истекшим сроком", "2 Заметка с заголовком и истекшим сроком", "04.05.2018", "03.05.2018"));
-        saveNote(new Note(null, "7 Только тело заметки 3", null, dateNow));
-        saveNote(new Note("Заметка с истекшим сроком 2", "1 Заметка с заголовком и истекшим сроком", "04.05.2018", "04.05.2018"));
+        // Есть ли смысл это все закидывать в defaultNotes. Если это все тестовое? или создать отдельный файл?
+        String dateNow = new SimpleDateFormat(context.getString(R.string.formatDate), Locale.getDefault()).format(new Date());
+
+        saveNote(new Note(context.getString(R.string.headline_1), context.getString(R.string.textNote_1), context.getString(R.string.dateDeadline_1), dateNow));
+        saveNote(new Note(null, context.getString(R.string.textNote_2), null, context.getString(R.string.dateUpdate_2)));
+        saveNote(new Note(null, context.getString(R.string.textNote_3), null, context.getString(R.string.dateUpdate_3)));
+        saveNote(new Note(context.getString(R.string.headline_4), context.getString(R.string.textNote_4), null, context.getString(R.string.dateUpdate_4)));
+        saveNote(new Note(null, context.getString(R.string.textNote_5), context.getString(R.string.dateDeadline_5), context.getString(R.string.dateUpdate_5)));
+        saveNote(new Note(null, context.getString(R.string.textNote_6), context.getString(R.string.dateDeadline_6), dateNow));
+        saveNote(new Note(context.getString(R.string.headline_7), context.getString(R.string.textNote_7), context.getString(R.string.dateDeadline_7), dateNow));
+        saveNote(new Note(context.getString(R.string.headline_8), context.getString(R.string.textNote_8), context.getString(R.string.dateDeadline_8), context.getString(R.string.dateUpdate_8)));
+        saveNote(new Note(null, context.getString(R.string.textNote_9), null, dateNow));
+        saveNote(new Note(context.getString(R.string.headline_10), context.getString(R.string.textNote_10), context.getString(R.string.dateDeadline_10), context.getString(R.string.dateUpdate_10)));
     }
 
     @Override
@@ -154,7 +153,6 @@ public class FileNoteRepository implements NoteRepository {
         }
 
         for (Note note : listNotes) {
-
             saveNote(note);
         }
     }

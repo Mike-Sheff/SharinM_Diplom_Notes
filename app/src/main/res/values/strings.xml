@@ -39,7 +39,7 @@
     <string name="textEditTextDataDeadline">Дата выполнения</string>
     <string name="textMessageExit">Нажмите еще раз, чтобы выйти!</string>
     <string name="symbolSeparationValues" translatable="false">;</string>
-    <string name="textMessageCreateDefualtNotes">Создание тестовых заметок!</string>
+    <string name="textMessageCreateDefaultNotes">Создание тестовых заметок!</string>
     <string name="textErrorMessageSaveNote">Для сохранения: тело заметки не должно быть пустым!</string>
     <string name="textMessageSaveNote">Заметка сохранена!</string>
     <string name="textMessageUpdateNote">Заметка обнавлена!</string>

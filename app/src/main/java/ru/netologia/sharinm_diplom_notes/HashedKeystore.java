@@ -7,6 +7,8 @@ import java.security.NoSuchAlgorithmException;
 
 public class HashedKeystore implements Keystore {
 
+    private final String TAG_MESSAGE_DIGEST = "MD5";
+
     HashedKeystore() {
     }
 
@@ -43,7 +45,7 @@ public class HashedKeystore implements Keystore {
         byte[] digest = new byte[0];
 
         try {
-            messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest = MessageDigest.getInstance(TAG_MESSAGE_DIGEST);
             messageDigest.reset();
             messageDigest.update(password.getBytes());
             digest = messageDigest.digest();

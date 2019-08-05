@@ -39,7 +39,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (editNewPassword.length() == R.dimen.lengthPassword) {
+                if (editNewPassword.length() == 4) {
                     App.getKeystore().saveNewPassword(editNewPassword.getText().toString());
 
                     editNewPassword.setText("");
