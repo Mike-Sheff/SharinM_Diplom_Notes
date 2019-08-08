@@ -1,11 +1,18 @@
 package ru.netologia.sharinm_diplom_notes;
 
+import android.content.Context;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 
 class ComparatorNotes implements Comparator {
+    private Context context;
+
+    ComparatorNotes(Context context) {
+        this.context = context;
+    }
+
     @Override
     public int compare(Object o1, Object o2) {
         Note note1 = (Note) o1;
@@ -18,22 +25,22 @@ class ComparatorNotes implements Comparator {
 
         if (existenceDateDeadline1 == 1) {
             try {
-                datedeadline1 = new SimpleDateFormat("dd.MM.yyyy").parse(note1.getDateDeadline());
+                datedeadline1 = new SimpleDateFormat(context.getString(R.string.formatDate)).parse(note1.getDateDeadline());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
         if (existenceDateDeadline2 == 1) {
             try {
-                datedeadline2 = new SimpleDateFormat("dd.MM.yyyy").parse(note2.getDateDeadline());
+                datedeadline2 = new SimpleDateFormat(context.getString(R.string.formatDate)).parse(note2.getDateDeadline());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
 
         try {
-            dateUpdate1 = new SimpleDateFormat("dd.MM.yyyy").parse(note1.getDateUpdateNote());
-            dateUpdate2 = new SimpleDateFormat("dd.MM.yyyy").parse(note2.getDateUpdateNote());
+            dateUpdate1 = new SimpleDateFormat(context.getString(R.string.formatDate)).parse(note1.getDateUpdateNote());
+            dateUpdate2 = new SimpleDateFormat(context.getString(R.string.formatDate)).parse(note2.getDateUpdateNote());
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -148,7 +148,7 @@ public class NoteActivity extends AppCompatActivity implements DatePickerDialog.
                         fileNoteRepository.saveNote(new Note((headline.getText().length() == 0 ? null : headline.getText().toString())
                                 , textNote.getText().toString()
                                 , (dataDeadline.getText().length() == 0 ? null : dataDeadline.getText().toString())
-                                , new SimpleDateFormat(getString(R.string.formatDateUpdate), Locale.getDefault()).format(new Date())));
+                                , new SimpleDateFormat(getString(R.string.formatDate), Locale.getDefault()).format(new Date())));
 
                         Toast.makeText(this, getString(R.string.textMessageSaveNote), Toast.LENGTH_LONG).show();
 
@@ -158,7 +158,7 @@ public class NoteActivity extends AppCompatActivity implements DatePickerDialog.
                     fileNoteRepository.saveNote(new Note((headline.getText().length() == 0 ? null : headline.getText().toString())
                             , textNote.getText().toString()
                             , (dataDeadline.getText().length() == 0 ? null : dataDeadline.getText().toString())
-                            , new SimpleDateFormat(getString(R.string.formatDateUpdate), Locale.getDefault()).format(new Date())));
+                            , new SimpleDateFormat(getString(R.string.formatDate), Locale.getDefault()).format(new Date())));
 
                     Toast.makeText(this, getString(R.string.textMessageUpdateNote), Toast.LENGTH_LONG).show();
                 }

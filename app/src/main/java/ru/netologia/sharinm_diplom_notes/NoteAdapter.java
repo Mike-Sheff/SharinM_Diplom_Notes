@@ -17,9 +17,14 @@ public class NoteAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
 
-    private Comparator<Note> comparator = new ComparatorNotes();
+    private Context context;
+
+    private Comparator<Note> comparator;
 
     NoteAdapter(Context context, List<Note> notes) {
+        this.context = context;
+        comparator = new ComparatorNotes(context);
+
         if (notes == null) {
             this.notes = new ArrayList<>();
         } else {

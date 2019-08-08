@@ -93,7 +93,7 @@ public class FileNoteRepository implements NoteRepository {
             }
         }
 
-        Collections.sort(noteList, new ComparatorNotes());
+        Collections.sort(noteList, new ComparatorNotes(context));
         return noteList;
     }
 
