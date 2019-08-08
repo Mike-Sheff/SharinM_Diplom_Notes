@@ -27,5 +27,4 @@
     <string name="dateUpdate_5" translatable="false">16.06.2019</string>
     <string name="dateUpdate_8" translatable="false">03.05.2018</string>
     <string name="dateUpdate_10" translatable="false">04.05.2018</string>
-    <string name="formatDate" translatable="false">dd.MM.yyyy</string>
 </resources>

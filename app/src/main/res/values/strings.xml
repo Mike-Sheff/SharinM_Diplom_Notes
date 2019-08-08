@@ -44,4 +44,5 @@
     <string name="textMessageSaveNote">Заметка сохранена!</string>
     <string name="textMessageUpdateNote">Заметка обнавлена!</string>
     <string name="formatDateUpdate" translatable="false">dd.MM.yyyy</string>
+    <string name="formatDate" translatable="false">dd.MM.yyyy</string>
 </resources>

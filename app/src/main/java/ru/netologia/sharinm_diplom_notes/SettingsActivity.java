@@ -53,19 +53,18 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         final ImageButton btnLookPassword = findViewById(R.id.buttonLookPassword);
-        btnLookPassword.setBackgroundResource(R.mipmap.ic_eye_not_look);
+
         btnLookPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (lookPassword) {
-                    btnLookPassword.setBackgroundResource(R.mipmap.ic_eye_not_look);
+                    btnLookPassword.setImageResource(R.drawable.eye_not_look);
                     editNewPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 } else {
-                    btnLookPassword.setBackgroundResource(android.R.drawable.ic_menu_view);
+                    btnLookPassword.setImageResource(R.drawable.eye_look);
                     editNewPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 }
-
                 editNewPassword.setSelection(editNewPassword.getText().length());
                 lookPassword = !lookPassword;
             }
