@@ -59,10 +59,10 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (lookPassword) {
-                    btnLookPassword.setImageResource(R.drawable.eye_not_look);
+                    btnLookPassword.setImageResource(R.drawable.ic_eye_not_look);
                     editNewPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 } else {
-                    btnLookPassword.setImageResource(R.drawable.eye_look);
+                    btnLookPassword.setImageResource(R.drawable.ic_eye_look);
                     editNewPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 }
                 editNewPassword.setSelection(editNewPassword.getText().length());
